@@ -11,10 +11,18 @@
 using namespace std;
 
 set<string> availableCommands = {"echo", "type", "exit", "pwd"};
+static string CURRENT_DIRECTORY = "/app";
 
 void invalidCommand(string& commandLine);
 string checkPath(string& command);
 void runProgram(string& path ,string& args);
+
+CommandsHandler::CommandsHandler(){
+    const size_t size = 1024;
+    char buffer[size];
+    getcwd(buffer, size);
+    CURRENT_DIRECTORY = buffer;
+}
 
 void CommandsHandler::handleCommand(string& commandLine){
     regex word_regex("\\w+");
@@ -23,8 +31,8 @@ void CommandsHandler::handleCommand(string& commandLine){
     string command = match.str();
     
     if(command == "echo"){
-        string text = commandLine.substr(5);
-        CommandsHandler::echo(text);
+        string arg = commandLine.substr(5);
+        CommandsHandler::echo(arg);
     }
     else if(command == "cd"){
         CommandsHandler::cd();
@@ -33,14 +41,20 @@ void CommandsHandler::handleCommand(string& commandLine){
         CommandsHandler::exitApp();
     }
     else if(command == "type"){
-        string text;
+        string arg;
         if(commandLine.size() > command.size())
-            text = commandLine.substr(5);
+            arg = commandLine.substr(5);
 
-        CommandsHandler::type(text);
+        CommandsHandler::type(arg);
     }
     else if(command == "pwd"){
         printCurDirectory();
+    }
+    else if(command == "cd"){
+        string arg;
+        if(commandLine.size() > command.size())
+            arg = commandLine.substr(3);
+        changeDirectory(arg);
     }
     else{
         string path = checkPath(command);
@@ -58,8 +72,8 @@ void CommandsHandler::handleCommand(string& commandLine){
     }
 }
 
-void CommandsHandler::echo(string& text){
-    cout << text << endl;
+void CommandsHandler::echo(string& arg){
+    cout << arg << endl;
 }
 
 void CommandsHandler::cd(){
@@ -70,17 +84,17 @@ void CommandsHandler::exitApp(){
     exit(0);
 }
 
-void CommandsHandler::type(string& text){
-    if(availableCommands.contains(text)){
-        cout << text << " is a shell builtin" << endl;
+void CommandsHandler::type(string& arg){
+    if(availableCommands.contains(arg)){
+        cout << arg << " is a shell builtin" << endl;
     }
     else{
-        string path = checkPath(text);
+        string path = checkPath(arg);
         if(!path.empty()){
-            cout << text << " is " << path << endl;
+            cout << arg << " is " << path << endl;
         }
         else{
-            cout << text << ": not found" << endl;
+            cout << arg << ": not found" << endl;
         }
     }
 }
@@ -109,10 +123,16 @@ void runProgram(string& path, string& args){
 }
 
 void CommandsHandler::printCurDirectory(){
-    const size_t size = 1024;
-    char buffer[size];
-    getcwd(buffer, size);
-    cout << buffer << endl;
+    cout << CURRENT_DIRECTORY << endl;
+}
+
+void CommandsHandler::changeDirectory(string& arg){
+    if(filesystem::exists(arg)){
+        CURRENT_DIRECTORY = arg;
+    }
+    else{
+        cout << "cd: " << arg << ": No such file or directory" << endl;
+    }
 }
 
 void invalidCommand(string& commandLine){
