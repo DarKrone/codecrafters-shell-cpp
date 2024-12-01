@@ -92,7 +92,7 @@ string checkPath(string command){
 }
 
 void runProgram(string path, string args){
-    string runCommand = "start " + path + ".exe " + args;
+    string runCommand = "start " + path + " " + args;
     cout << runCommand << endl;
     system(runCommand.c_str());
 }
