@@ -13,7 +13,7 @@ set<string> availableCommands = {"echo", "type", "exit"};
 
 void invalidCommand(string commandLine);
 string checkPath(string command);
-void runProgramm(string path ,string args);
+void runProgram(string path ,string args);
 
 void CommandsHandler::handleCommand(string commandLine){
     regex word_regex("\\w+");
@@ -39,7 +39,7 @@ void CommandsHandler::handleCommand(string commandLine){
         string path = checkPath(command);
         string text = commandLine.substr(path.size() + 1);
         if(!path.empty()){
-            runProgramm(path, text);
+            runProgram(path, text);
         }
         invalidCommand(command);
     }
@@ -89,8 +89,9 @@ string checkPath(string command){
     return "";
 }
 
-void runProgramm(string path, string args){
+void runProgram(string path, string args){
     string runCommand = "start " + path + ".exe " + args;
+    cout << runCommand;
     system(runCommand.c_str());
 }
 
