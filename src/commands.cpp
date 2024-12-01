@@ -39,7 +39,7 @@ void CommandsHandler::handleCommand(string commandLine){
         string path = checkPath(command);
         string text = commandLine.substr(command.size() + 1);
         if(!path.empty()){
-            runProgram(path, text);
+            runProgram(command, text);
         }
         else{
             invalidCommand(command);
