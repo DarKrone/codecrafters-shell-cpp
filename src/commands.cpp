@@ -92,7 +92,7 @@ string checkPath(string command){
 }
 
 void runProgram(string path, string args){
-    string runCommand = "exec ." + path + " " + args;
+    string runCommand = "exec " + path + " " + args;
     cout << runCommand << endl;
     system(runCommand.c_str());
 }
