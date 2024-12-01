@@ -6,5 +6,6 @@ class CommandsHandler{
         void echo(std::string& text);
         void cd();
         void exitApp();
+        void printCurDirectory();
         void type(std::string& text);
 };

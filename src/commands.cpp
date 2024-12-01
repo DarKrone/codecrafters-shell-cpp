@@ -6,10 +6,11 @@
 #include <set>
 #include <sstream>
 #include <filesystem>
+#include <unistd.h>
 
 using namespace std;
 
-set<string> availableCommands = {"echo", "type", "exit"};
+set<string> availableCommands = {"echo", "type", "exit", "pwd"};
 
 void invalidCommand(string& commandLine);
 string checkPath(string& command);
@@ -37,6 +38,9 @@ void CommandsHandler::handleCommand(string& commandLine){
             text = commandLine.substr(5);
 
         CommandsHandler::type(text);
+    }
+    else if(command == "pwd"){
+        printCurDirectory();
     }
     else{
         string path = checkPath(command);
@@ -102,6 +106,13 @@ void runProgram(string& path, string& args){
     string runCommand = "exec " + path + " " + args;
     //cout << runCommand << endl;
     system(runCommand.c_str());
+}
+
+void CommandsHandler::printCurDirectory(){
+    const size_t size = 1024;
+    char buffer[size];
+    getcwd(buffer, size);
+    cout << buffer << endl;
 }
 
 void invalidCommand(string& commandLine){
