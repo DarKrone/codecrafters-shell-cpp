@@ -3,8 +3,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <regex>
+#include <set>
 
 using namespace std;
+
+set<string> availableCommands = {"echo", "type", "exit"};
 
 void invalidCommand(string commandLine);
 
@@ -24,6 +27,10 @@ void CommandsHandler::handleCommand(string commandLine){
     else if(command == "exit"){
         CommandsHandler::exitApp();
     }
+    else if(command == "type"){
+        string text = commandLine.substr(5);
+        CommandsHandler::type(text);
+    }
     else{
         invalidCommand(command);
     }
@@ -39,6 +46,15 @@ void CommandsHandler::cd(){
 
 void CommandsHandler::exitApp(){
     exit(0);
+}
+
+void CommandsHandler::type(string text){
+    if(availableCommands.contains(text)){
+        cout << text << " is a shell builtin" << endl;
+    }
+    else{
+        cout << text << ": not found" << endl;
+    }
 }
 
 void invalidCommand(string commandLine){
