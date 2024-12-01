@@ -4,12 +4,15 @@
 #include <cstdlib>
 #include <regex>
 #include <set>
+#include <sstream>
+#include <filesystem>
 
 using namespace std;
 
 set<string> availableCommands = {"echo", "type", "exit"};
 
 void invalidCommand(string commandLine);
+string checkPath(string command);
 
 void CommandsHandler::handleCommand(string commandLine){
     regex word_regex("\\w+");
@@ -53,8 +56,31 @@ void CommandsHandler::type(string text){
         cout << text << " is a shell builtin" << endl;
     }
     else{
-        cout << text << ": not found" << endl;
+        string path = checkPath(text);
+        if(!path.empty()){
+            cout << text << " is " << path;
+        }
+        else{
+            cout << text << ": not found" << endl;
+        }
     }
+}
+
+string checkPath(string command){
+    string path_env = getenv("PATH");
+    stringstream ss(path_env);
+    string path;
+
+    while(!ss.eof()){
+        getline(ss, path, ':');
+
+        string full_path = path + '/' + command;
+
+        if(filesystem::exists(full_path)){
+            return full_path;
+        }
+    }
+    return "";
 }
 
 void invalidCommand(string commandLine){
