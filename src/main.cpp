@@ -10,12 +10,12 @@ int main() {
   cerr << std::unitbuf;
 
   // Uncomment this block to pass the first stage
-  cout << "$ ";
 
   CommandsHandler handler = CommandsHandler();
 
   string input;
   while(true){
+    cout << "$ ";
     getline(cin, input);
     handler.handleCommand(input);
   }
