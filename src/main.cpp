@@ -15,7 +15,8 @@ int main() {
   CommandsHandler handler = CommandsHandler();
 
   string input;
-  getline(cin, input);
-
-  handler.handleCommand(input);
+  while(true){
+    getline(cin, input);
+    handler.handleCommand(input);
+  }
 }
