@@ -39,7 +39,7 @@ void CommandsHandler::handleCommand(string commandLine){
         string path = checkPath(command);
         string text = commandLine.substr(command.size() + 1);
         if(!path.empty()){
-            runProgram(command, text);
+            runProgram(path, text);
         }
         else{
             invalidCommand(command);
@@ -92,7 +92,7 @@ string checkPath(string command){
 }
 
 void runProgram(string path, string args){
-    string runCommand = "exec ./" + path + " " + args;
+    string runCommand = "exec ." + path + " " + args;
     cout << runCommand << endl;
     system(runCommand.c_str());
 }
