@@ -8,6 +8,7 @@ class CommandsHandler{
         void cd();
         void exitApp();
         void printCurDirectory();
-        void changeDirectory(string& arg);
+        void runProgram(std::string& path, std::string& args);
+        void changeDirectory(std::string& arg);
         void type(std::string& arg);
 };

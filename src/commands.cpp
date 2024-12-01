@@ -54,7 +54,7 @@ void CommandsHandler::handleCommand(string& commandLine){
         string arg;
         if(commandLine.size() > command.size())
             arg = commandLine.substr(3);
-        changeDirectory(arg);
+        CommandsHandler::changeDirectory(arg);
     }
     else{
         string path = checkPath(command);
@@ -64,7 +64,7 @@ void CommandsHandler::handleCommand(string& commandLine){
             if(commandLine.size() > command.size())
                 text = commandLine.substr(command.size() + 1);
                 
-            runProgram(path, text);
+            CommandsHandler::runProgram(path, text);
         }
         else{
             invalidCommand(command);
@@ -116,7 +116,7 @@ string checkPath(string& command){
     return "";
 }
 
-void runProgram(string& path, string& args){
+void CommandsHandler::runProgram(string& path, string& args){
     string runCommand = "exec " + path + " " + args;
     //cout << runCommand << endl;
     system(runCommand.c_str());
