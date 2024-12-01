@@ -3,7 +3,7 @@
 class CommandsHandler{
     public:
         void handleCommand(std::string command);
-        void echo();
+        void echo(std::string text);
         void cd();
         void exitApp();
 };

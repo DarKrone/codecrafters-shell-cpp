@@ -6,22 +6,22 @@
 
 using namespace std;
 
-void invalidCommand(string command);
+void invalidCommand(string commandLine);
 
-void CommandsHandler::handleCommand(string command){
+void CommandsHandler::handleCommand(string commandLine){
     regex word_regex("\\w+");
-
-    auto firstWord = sregex_iterator(command.begin(), command.end(), word_regex);
+    auto firstWord = sregex_iterator(commandLine.begin(), commandLine.end(), word_regex);
     smatch match = *firstWord;
-    string firstWordStr = match.str();
-
-    if(firstWordStr == "echo"){
-        CommandsHandler::echo();
+    string command = match.str();
+    
+    if(command == "echo"){
+        string text = commandLine.substr(5);
+        CommandsHandler::echo(text);
     }
-    else if(firstWordStr == "cd"){
+    else if(command == "cd"){
         CommandsHandler::cd();
     }
-    else if(firstWordStr == "exit"){
+    else if(command == "exit"){
         CommandsHandler::exitApp();
     }
     else{
@@ -29,8 +29,8 @@ void CommandsHandler::handleCommand(string command){
     }
 }
 
-void CommandsHandler::echo(){
-    return;
+void CommandsHandler::echo(string text){
+    cout << text << endl;
 }
 
 void CommandsHandler::cd(){
@@ -41,6 +41,6 @@ void CommandsHandler::exitApp(){
     exit(0);
 }
 
-void invalidCommand(string command){
-    cout << command << ": command not found" << endl;
+void invalidCommand(string commandLine){
+    cout << commandLine << ": command not found" << endl;
 }
