@@ -29,7 +29,6 @@ void CommandsHandler::handleCommand(string& commandLine){
     auto firstWord = sregex_iterator(commandLine.begin(), commandLine.end(), word_regex);
     smatch match = *firstWord;
     string command = match.str();
-    cout << command << endl;
     
     if(command == "echo"){
         string arg = commandLine.substr(5);
@@ -49,7 +48,6 @@ void CommandsHandler::handleCommand(string& commandLine){
         printCurDirectory();
     }
     else if(command == "cd"){
-        cout << "CD" << endl;
         string arg;
         if(commandLine.size() > command.size())
             arg = commandLine.substr(3);
