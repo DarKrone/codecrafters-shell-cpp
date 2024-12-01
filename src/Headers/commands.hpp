@@ -5,7 +5,6 @@ class CommandsHandler{
         CommandsHandler();
         void handleCommand(std::string& command);
         void echo(std::string& arg);
-        void cd();
         void exitApp();
         void printCurDirectory();
         void runProgram(std::string& path, std::string& args);

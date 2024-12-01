@@ -29,13 +29,11 @@ void CommandsHandler::handleCommand(string& commandLine){
     auto firstWord = sregex_iterator(commandLine.begin(), commandLine.end(), word_regex);
     smatch match = *firstWord;
     string command = match.str();
+    cout << command << endl;
     
     if(command == "echo"){
         string arg = commandLine.substr(5);
         CommandsHandler::echo(arg);
-    }
-    else if(command == "cd"){
-        CommandsHandler::cd();
     }
     else if(command == "exit"){
         CommandsHandler::exitApp();
@@ -51,6 +49,7 @@ void CommandsHandler::handleCommand(string& commandLine){
         printCurDirectory();
     }
     else if(command == "cd"){
+        cout << "CD" << endl;
         string arg;
         if(commandLine.size() > command.size())
             arg = commandLine.substr(3);
@@ -74,10 +73,6 @@ void CommandsHandler::handleCommand(string& commandLine){
 
 void CommandsHandler::echo(string& arg){
     cout << arg << endl;
-}
-
-void CommandsHandler::cd(){
-    return;
 }
 
 void CommandsHandler::exitApp(){
