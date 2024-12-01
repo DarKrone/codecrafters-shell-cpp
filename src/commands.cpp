@@ -58,7 +58,7 @@ void CommandsHandler::type(string text){
     else{
         string path = checkPath(text);
         if(!path.empty()){
-            cout << text << " is " << path;
+            cout << text << " is " << path << endl;
         }
         else{
             cout << text << ": not found" << endl;
