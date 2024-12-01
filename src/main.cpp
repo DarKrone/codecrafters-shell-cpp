@@ -1,13 +1,20 @@
 #include <iostream>
+#include "Headers/commands.hpp"
+
+using namespace std;
 
 int main() {
   // Flush after every std::cout / std:cerr
-  std::cout << std::unitbuf;
-  std::cerr << std::unitbuf;
+  cout << std::unitbuf;
+  cerr << std::unitbuf;
 
   // Uncomment this block to pass the first stage
-  std::cout << "$ ";
-  
-  std::string input;
-  std::getline(std::cin, input);
+  cout << "$ ";
+
+  CommandsHandler handler = CommandsHandler();
+
+  string input;
+  getline(cin, input);
+
+  handler.handleCommand(input);
 }
