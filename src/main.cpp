@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "./Headers/commands.hpp"
+#include "commands.hpp"
 
 using namespace std;
 
