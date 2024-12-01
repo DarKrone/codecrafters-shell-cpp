@@ -37,9 +37,7 @@ void CommandsHandler::handleCommand(string commandLine){
     }
     else{
         string path = checkPath(command);
-        cout << path << endl;
-        string text = commandLine.substr(path.size() + 1);
-        cout << text << endl;
+        string text = commandLine.substr(command.size() + 1);
         if(!path.empty()){
             runProgram(path, text);
         }
@@ -95,7 +93,6 @@ string checkPath(string command){
 
 void runProgram(string path, string args){
     string runCommand = "start " + path + ".exe " + args;
-    cout << runCommand << endl;
     system(runCommand.c_str());
 }
 
