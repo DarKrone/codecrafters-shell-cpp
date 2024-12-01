@@ -27,5 +27,5 @@ void CommandsHandler::cd(){
 }
 
 void invalidCommand(string command){
-    cout << command << ": command not found";
+    cout << command << ": command not found" << endl;
 }
