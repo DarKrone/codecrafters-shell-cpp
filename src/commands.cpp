@@ -179,7 +179,7 @@ void CommandsHandler::changeDirectoryRel(string& arg){
     CommandsHandler::changeDirectoryAbs(tempAbsPath);
 }
 
-void changeDirectoryToHome(){
+void CommandsHandler::changeDirectoryToHome(){
     string home_env = getenv("HOME");
     CURRENT_DIRECTORY = home_env;
 }
