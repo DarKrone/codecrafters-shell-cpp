@@ -7,6 +7,7 @@
 #include <sstream>
 #include <filesystem>
 #include <unistd.h>
+#include <queue>
 
 using namespace std;
 
@@ -15,7 +16,6 @@ static string CURRENT_DIRECTORY = "/app";
 
 void invalidCommand(string& commandLine);
 string checkPath(string& command);
-void runProgram(string& path ,string& args);
 
 CommandsHandler::CommandsHandler(){
     const size_t size = 1024;
@@ -51,7 +51,13 @@ void CommandsHandler::handleCommand(string& commandLine){
         string arg;
         if(commandLine.size() > command.size())
             arg = commandLine.substr(3);
-        CommandsHandler::changeDirectory(arg);
+        
+        if(arg[0] == '.'){
+            CommandsHandler::changeDirectoryRel(arg);
+        }
+        else{
+            CommandsHandler::changeDirectoryAbs(arg);
+        }
     }
     else{
         string path = checkPath(command);
@@ -119,13 +125,52 @@ void CommandsHandler::printCurDirectory(){
     cout << CURRENT_DIRECTORY << endl;
 }
 
-void CommandsHandler::changeDirectory(string& arg){
+void CommandsHandler::changeDirectoryAbs(string& arg){
     if(filesystem::exists(arg)){
         CURRENT_DIRECTORY = arg;
     }
     else{
         cout << "cd: " << arg << ": No such file or directory" << endl;
     }
+}
+
+void CommandsHandler::changeDirectoryRel(string& arg){
+    queue<string> pathQueue;
+
+    int i = 0;
+    string s;
+    char separator = '/';
+    while(arg[i] != '\0'){
+        if(arg[i] != separator){
+            s += arg[i];
+        }
+        else{
+            pathQueue.push(s);
+            s.clear();
+        }
+        ++i;
+    }
+    pathQueue.push(s);
+    s.clear();
+
+    string tempAbsPath = CURRENT_DIRECTORY;
+    while(!pathQueue.empty()){
+        string currTempPath = pathQueue.front();
+        pathQueue.pop();
+
+        if(currTempPath == "."){
+            continue;
+        }
+        else if(currTempPath == ".."){
+            int lastSlashIndex = tempAbsPath.rfind('/');
+            tempAbsPath = tempAbsPath.substr(0, lastSlashIndex);
+        }
+        else{
+            tempAbsPath += "/" + currTempPath;
+        }
+    }
+
+    CommandsHandler::changeDirectoryAbs(tempAbsPath);
 }
 
 void invalidCommand(string& commandLine){
