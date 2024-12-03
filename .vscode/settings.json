@@ -3,6 +3,7 @@
         "string": "cpp",
         "iostream": "cpp",
         "cstdlib": "cpp",
-        "format": "cpp"
+        "format": "cpp",
+        "iosfwd": "cpp"
     }
 }

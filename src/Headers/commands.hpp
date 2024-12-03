@@ -10,5 +10,6 @@ class CommandsHandler{
         void runProgram(std::string& path, std::string& args);
         void changeDirectoryAbs(std::string& arg);
         void changeDirectoryRel(std::string& arg);
+        void changeDirectoryToHome();
         void type(std::string& arg);
 };

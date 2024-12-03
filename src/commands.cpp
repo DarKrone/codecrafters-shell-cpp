@@ -55,6 +55,9 @@ void CommandsHandler::handleCommand(string& commandLine){
         if(arg[0] == '.'){
             CommandsHandler::changeDirectoryRel(arg);
         }
+        else if(arg[0] == '~'){
+
+        }
         else{
             CommandsHandler::changeDirectoryAbs(arg);
         }
@@ -154,9 +157,11 @@ void CommandsHandler::changeDirectoryRel(string& arg){
     s.clear();
 
     string tempAbsPath = CURRENT_DIRECTORY;
+    int j = 0;
     while(!pathQueue.empty()){
         string currTempPath = pathQueue.front();
         pathQueue.pop();
+        //cout << currTempPath << " " << j++ << endl;
 
         if(currTempPath == "."){
             continue;
@@ -165,13 +170,18 @@ void CommandsHandler::changeDirectoryRel(string& arg){
             int lastSlashIndex = tempAbsPath.rfind('/');
             tempAbsPath = tempAbsPath.substr(0, lastSlashIndex);
         }
-        else if(currTempPath != " "){
+        else if(!currTempPath.empty() && currTempPath != " " && currTempPath != "\n"){
             tempAbsPath += "/" + currTempPath;
         }
     }
 
     //cout << tempAbsPath << endl;
     CommandsHandler::changeDirectoryAbs(tempAbsPath);
+}
+
+void changeDirectoryToHome(){
+    string home_env = getenv("PATH");
+    CURRENT_DIRECTORY = home_env;
 }
 
 void invalidCommand(string& commandLine){
