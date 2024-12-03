@@ -56,7 +56,7 @@ void CommandsHandler::handleCommand(string& commandLine){
             CommandsHandler::changeDirectoryRel(arg);
         }
         else if(arg[0] == '~'){
-
+            changeDirectoryToHome();
         }
         else{
             CommandsHandler::changeDirectoryAbs(arg);
