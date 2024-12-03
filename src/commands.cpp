@@ -180,7 +180,7 @@ void CommandsHandler::changeDirectoryRel(string& arg){
 }
 
 void changeDirectoryToHome(){
-    string home_env = getenv("PATH");
+    string home_env = getenv("HOME");
     CURRENT_DIRECTORY = home_env;
 }
 
