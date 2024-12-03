@@ -16,6 +16,7 @@ static string CURRENT_DIRECTORY = "/app";
 
 void invalidCommand(string& commandLine);
 string checkPath(string& command);
+string concatStringFromArgs(string args);
 
 CommandsHandler::CommandsHandler(){
     const size_t size = 1024;
@@ -62,6 +63,11 @@ void CommandsHandler::handleCommand(string& commandLine){
             CommandsHandler::changeDirectoryAbs(arg);
         }
     }
+    else if(command == "cat"){
+        string arg = commandLine.substr(4);
+        arg = concatStringFromArgs(arg);
+        CommandsHandler::echo(arg);
+    }
     else{
         string path = checkPath(command);
             
@@ -79,6 +85,9 @@ void CommandsHandler::handleCommand(string& commandLine){
 }
 
 void CommandsHandler::echo(string& arg){
+    if(arg[0] == '\''){
+        arg = arg.substr(1, arg.rfind('\'') - 1);
+    }
     cout << arg << endl;
 }
 
@@ -186,4 +195,18 @@ void CommandsHandler::changeDirectoryToHome(){
 
 void invalidCommand(string& commandLine){
     cout << commandLine << ": command not found" << endl;
+}
+
+string concatStringFromArgs(string args){
+    string result = "";
+    cout << args << endl;
+    int firstQuoteIndex = args.find('\'');
+    while(firstQuoteIndex >= 0){
+        args = args.substr(firstQuoteIndex + 1);
+        int secondQuoteIndex = args.find('\'');
+        result += args.substr(0, secondQuoteIndex);
+        args = args.substr(secondQuoteIndex + 1);
+        firstQuoteIndex = args.find('\'');
+    }
+    return result;
 }
