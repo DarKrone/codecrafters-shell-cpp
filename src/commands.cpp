@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <unistd.h>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -85,10 +86,16 @@ void CommandsHandler::handleCommand(string& commandLine){
 }
 
 void CommandsHandler::echo(string& arg){
+    string text;
     if(arg[0] == '\''){
-        arg = arg.substr(1, arg.rfind('\'') - 1);
+        text = arg.substr(1, arg.rfind('\'') - 1);
     }
-    cout << arg << endl;
+    else{
+        int index = 0;
+        text.clear();
+        unique_copy (arg.begin(), arg.end(), back_insert_iterator<string>(text), [](char a,char b){ return isspace(a) && isspace(b);});
+    }
+    cout << text << endl;
 }
 
 void CommandsHandler::exitApp(){
