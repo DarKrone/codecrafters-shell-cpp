@@ -162,14 +162,15 @@ void CommandsHandler::changeDirectoryRel(string& arg){
             continue;
         }
         else if(currTempPath == ".."){
-            int lastSlashIndex = tempAbsPath.rfind('/');
+            int lastSlashIndex = tempAbsPath.rfind('\\');
             tempAbsPath = tempAbsPath.substr(0, lastSlashIndex);
         }
-        else{
-            tempAbsPath += "/" + currTempPath;
+        else if(currTempPath != " "){
+            tempAbsPath += "\\" + currTempPath;
         }
     }
 
+    //cout << tempAbsPath << endl;
     CommandsHandler::changeDirectoryAbs(tempAbsPath);
 }
 
