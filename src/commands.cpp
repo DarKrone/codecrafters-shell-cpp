@@ -171,7 +171,7 @@ void CommandsHandler::changeDirectoryRel(string& arg){
             tempAbsPath = tempAbsPath.substr(0, lastSlashIndex);
         }
         else if(!currTempPath.empty() && currTempPath != " " && currTempPath != "\n"){
-            tempAbsPath += "/" + currTempPath; // test again (last test freezed) x2
+            tempAbsPath += "/" + currTempPath;
         }
     }
 
